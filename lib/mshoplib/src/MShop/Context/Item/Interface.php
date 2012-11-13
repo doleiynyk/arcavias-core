@@ -74,6 +74,20 @@ interface MShop_Context_Item_Interface
 	public function getLocale();
 
 	/**
+	 * Sets the translation object.
+	 *
+	 * @param MW_Translation_Interface $translation Translation object
+	 */
+	public function setTranslation( MW_Translation_Interface $translation );
+
+	/**
+	 * Returns the translation object.
+	 *
+	 * @return MW_Translation_Interface
+	 */
+	public function getTranslation();
+
+	/**
 	 *	Sets the logger object.
 	 *
 	 * @param MW_Logger_Interface $logger Logger object

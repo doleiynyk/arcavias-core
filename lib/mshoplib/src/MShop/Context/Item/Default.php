@@ -23,6 +23,7 @@ class MShop_Context_Item_Default implements MShop_Context_Item_Interface
 	private $_locale;
 	private $_logger;
 	private $_session;
+	private $_translation;
 	private $_user = '';
 
 
@@ -37,6 +38,7 @@ class MShop_Context_Item_Default implements MShop_Context_Item_Interface
 		$this->_locale = null;
 		$this->_logger = null;
 		$this->_session = null;
+		$this->_translation = null;
 	}
 
 
@@ -51,6 +53,7 @@ class MShop_Context_Item_Default implements MShop_Context_Item_Interface
 		$this->_locale = ( isset( $this->_locale ) ? clone $this->_locale : null );
 		$this->_logger = ( isset( $this->_logger ) ? clone $this->_logger : null );
 		$this->_session = ( isset( $this->_session ) ? clone $this->_session : null );
+		$this->_translation = ( isset( $this->_translation ) ? clone $this->_translation : null );
 	}
 
 
@@ -155,6 +158,32 @@ class MShop_Context_Item_Default implements MShop_Context_Item_Interface
 		}
 
 		return $this->_locale;
+	}
+
+
+	/**
+	 * Sets the translation object.
+	 *
+	 * @param MW_Translation_Interface $translation Translation object
+	 */
+	public function setTranslation( MW_Translation_Interface $translation )
+	{
+		$this->_translation = $translation;
+	}
+
+
+	/**
+	 * Returns the translation object.
+	 *
+	 * @return MW_Translation_Interface
+	 */
+	public function getTranslation()
+	{
+		if( is_null( $this->_translation ) ) {
+			throw new MShop_Exception( 'No translation object available' );
+		}
+
+		return $this->_translation;
 	}
 
 

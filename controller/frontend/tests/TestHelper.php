@@ -77,6 +77,11 @@ class TestHelper
 		$ctx->setSession( $session );
 
 
+		$translationSources = $mshop->getI18nPaths( 'lib/mshoplib' );
+		$translation = new MW_Translation_Zend( $translationSources, 'gettext', 'de_DE', array('disableNotices'=>true) );
+		$ctx->setTranslation( $translation );
+
+
 		$localeManager = MShop_Locale_Manager_Factory::createManager( $ctx );
 		$locale = $localeManager->bootstrap( $site, '', '', false );
 		$ctx->setLocale( $locale );

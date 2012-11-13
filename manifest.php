@@ -46,4 +46,10 @@ return array(
 			'client/html/layouts',
 		),
 	),
+	'i18n' => array(
+			'core/lib/mshoplib' => 'lib/mshoplib/',
+			'core/client/html' => 'client/html/',
+			'core/controller/extjs' => 'controller/extjs/',
+			'core/controller/frontend' => 'controller/frontend/',
+	),
 );

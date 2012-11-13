@@ -82,6 +82,8 @@ try
 	$session = new MW_Session_None();
 	$ctx->setSession( $session );
 
+	$ctx->setTranslation( new MW_Translation_None() );
+
 	$manager = new MW_Setup_Manager_Default( $dbm->acquire(), $dbconfig, $taskPaths, $ctx );
 	$manager->run( $dbconfig['adapter'] );
 }

@@ -201,6 +201,32 @@ class MShop
 
 
 	/**
+	 * Returns the list of paths for each domain where the translation files are located.
+	 *
+	 * @return array List of key value pairs where the key is the domain and the value for the path
+	 */
+	public function getI18nPaths()
+	{
+		$paths = array();
+
+		foreach ( $this->_manifests as $basePath => $manifest )
+		{
+			if ( isset( $manifest['i18n'] ) )
+			{
+				foreach( $manifest['i18n'] as $domain => $location )
+				{
+					if ( !isset($paths[ $domain ]) ) {
+						$paths[ $domain ] = $basePath . DIRECTORY_SEPARATOR . $location;
+					}
+				}
+			}
+		}
+
+		return $paths;
+	}
+
+
+	/**
 	 * Returns the configurations of the manifest files in the given directories.
 	 *
 	 * @param array $directories List of directories where the manifest files are stored

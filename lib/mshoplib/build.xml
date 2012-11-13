@@ -39,8 +39,34 @@
 			</fileset>
 		</delete>
 	</target>
+	
+	<target name="i18n" description="Generates and updates i18n translation message *.po files">
+        <foreach param="po-fname" absparam="po-filename" target="i18n-update">
+            <fileset dir=".">
+                <include name="*.php" />
+            </fileset>
+        </foreach>
+	</target>
 
 	<target name="all" depends="coverage,testperf,check" description="Builds all parts of the package">
 	</target>
+	
+	<target name="i18n-update">
+		<fail unless="po-filename" message="Missing file name" />
+		<exec command="echo ${po-filename}" /> 
+    </target>
+
+	<target name="build" description="Generates translation *.mo files for the deployment">
+		<foreach param="mo-fname" absparam="mo-filename" target="build-mo">
+            <fileset dir=".">
+                <include name="*.php" />
+            </fileset>
+        </foreach>
+	</target>
+
+	<target name="build-mo">
+		<fail unless="mo-filename" message="Missing file name" />
+		<exec command="echo ${mo-filename}" /> 
+    </target>
 
 </project>
