@@ -108,7 +108,7 @@ implements MShop_Service_Provider_Payment_Interface
 			if( ( $fn = $address->getFirstname() ) !== '' && ( $ln = $address->getLastname() ) !== '' ) {
 				$feconfig['payment.directdebit.accountowner']['default'] = $fn . ' ' . $ln;
 			}
-		} catch( MShop_Order_Exception $ex ) {}
+		} catch( MShop_Order_Exception $ex ) { ; }
 
 		foreach( $feconfig as $key => $config ) {
 			$list[$key] = new MW_Common_Criteria_Attribute_Default( $config );
