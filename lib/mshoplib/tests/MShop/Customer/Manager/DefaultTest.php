@@ -257,4 +257,23 @@ class MShop_Customer_Manager_DefaultTest extends MW_Unittest_Testcase
 		$this->setExpectedException('MShop_Exception');
 		$this->_object->getSubManager('address', 'unknown');
 	}
+
+	public function testMyTest()
+	{
+		echo "----->!!!!!!!myTest!!!!!<------";
+
+		$search = $this->_object->createSearch();
+
+		$items = $this->_object->searchItems( $search );
+
+		$item = reset( $items );
+
+		$item->getPaymentAddress()->toArray();
+
+		$copiedItem = clone $item;
+
+		$address = $copiedItem->getPaymentAddress();
+
+		$address->toArray();
+	}
 }
