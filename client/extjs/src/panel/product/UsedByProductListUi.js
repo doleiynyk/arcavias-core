@@ -23,7 +23,7 @@ MShop.panel.product.UsedByProductListUi = Ext.extend( MShop.panel.AbstractUsedBy
 	},
 
 	parentIdProperty : 'product.list.parentid',
-	parentDomainPorperty : 'product.list.domain',
+	parentDomainProperty : 'product.list.domain',
 	parentRefIdProperty : 'product.list.refid',
 
 	initComponent : function()

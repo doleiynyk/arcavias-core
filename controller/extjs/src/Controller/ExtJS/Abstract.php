@@ -86,6 +86,80 @@ abstract class Controller_ExtJS_Abstract
 	}
 
 
+	public function copyAs( stdClass $params )
+	{
+		$this->_checkParams( $params, array( 'site', 'items' ) );
+		$this->_setLocale( $params->site );
+
+		$catalogManager = MShop_Catalog_Manager_Factory::createManager( $this->_context );
+		$indexManager = $catalogManager->getSubManager( 'index' );
+
+		$ids = array();
+		$items = ( !is_array( $params->items ) ? array( $params->items ) : $params->items );
+
+		foreach( (array) $params->items as $id ) {
+			$this->_getManager()->deleteItem( $id );
+		}
+
+
+		foreach( $items as $entry )
+		{
+			$item = $this->_manager->createItem();
+
+			if( isset( $entry->{'product.id'} ) ) {
+				$item->setId( $entry->{'product.id'} );
+			}
+			if( isset( $entry->{'product.typeid'} ) ) {
+				$item->setTypeId( $entry->{'product.typeid'} );
+			}
+			if( isset( $entry->{'product.code'} ) ) {
+				$item->setCode( $entry->{'product.code'} );
+			}
+			if( isset( $entry->{'product.label'} ) ) {
+				$item->setLabel( $entry->{'product.label'} );
+			}
+			if( isset( $entry->{'product.status'} ) ) {
+				$item->setStatus( $entry->{'product.status'} );
+			}
+			if( isset( $entry->{'product.listflag'} ) ) {
+				$item->setListFlag( $entry->{'product.listflag'} );
+			}
+			if( isset( $entry->{'product.suppliercode'} ) ) {
+				$item->setSupplierCode( $entry->{'product.suppliercode'} );
+			}
+
+			if( isset( $entry->{'product.datestart'} ) && $entry->{'product.datestart'} != '' )
+			{
+				$datetime = str_replace( 'T', ' ', $entry->{'product.datestart'} );
+				$entry->{'product.datestart'} = $datetime;
+				$item->setDateStart( $datetime );
+			}
+
+			if( isset( $entry->{'product.dateend'} ) && $entry->{'product.dateend'} != '' )
+			{
+				$datetime = str_replace( 'T', ' ', $entry->{'product.dateend'} );
+				$entry->{'product.dateend'} = $datetime;
+				$item->setDateEnd( $datetime );
+			}
+
+			$this->_manager->saveItem( $item );
+			$indexManager->saveItem( $item );
+
+			$ids[] = $item->getId();
+		}
+
+		$search = $this->_manager->createSearch();
+		$search->setConditions( $search->compare( '==', 'product.id', $ids ) );
+		$search->setSlice( 0, count( $ids ) );
+		$items = $this->_toArray( $this->_manager->searchItems( $search ) );
+
+		return array(
+				'items' => ( !is_array( $params->items ) ? reset( $items ) : $items ),
+				'success' => true,
+		);
+	}
+
+
 	/**
 	 * Retrieves all items matching the given criteria.
 	 *
