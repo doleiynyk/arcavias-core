@@ -447,7 +447,8 @@ class MShop_Price_Manager_Default
 		$context = $this->_getContext();
 		$config = $context->getConfig();
 		$dbm = $context->getDatabaseManager();
-		$conn = $dbm->acquire();
+		$dbname = $config->get( 'resource/default', 'db' );
+		$conn = $dbm->acquire( $dbname );
 
 		try
 		{
@@ -493,11 +494,11 @@ class MShop_Price_Manager_Default
 				}
 			}
 
-			$dbm->release($conn);
+			$dbm->release( $conn, $dbname );
 		}
 		catch( Exception $e )
 		{
-			$dbm->release( $conn );
+			$dbm->release( $conn, $dbname );
 			throw $e;
 		}
 	}
@@ -518,8 +519,10 @@ class MShop_Price_Manager_Default
 	public function searchItems( MW_Common_Criteria_Interface $search, array $ref = array(), &$total = null )
 	{
 		$map = $typeIds = array();
-		$dbm = $this->_getContext()->getDatabaseManager();
-		$conn = $dbm->acquire();
+		$context = $this->_getContext();
+		$dbm = $context->getDatabaseManager();
+		$dbname = $context->getConfig()->get( 'resource/default', 'db' );
+		$conn = $dbm->acquire( $dbname );
 
 		try
 		{
@@ -536,11 +539,11 @@ class MShop_Price_Manager_Default
 				$typeIds[ $row['typeid'] ] = null;
 			}
 
-			$dbm->release( $conn );
+			$dbm->release( $conn, $dbname );
 		}
 		catch( Exception $e )
 		{
-			$dbm->release( $conn );
+			$dbm->release( $conn, $dbname );
 			throw $e;
 		}
 
