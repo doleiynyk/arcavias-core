@@ -178,6 +178,8 @@ CREATE TABLE "mshop_service_list" (
 	"end" DATETIME DEFAULT NULL,
 	-- Precedence of the promotion
 	"pos" INTEGER NOT NULL,
+	-- status code (0=hidden, 1=display, >1 for anything special)
+	"status" SMALLINT NOT NULL DEFAULT 0,
 	-- Date of last modification of this database entry
 	"mtime" DATETIME NOT NULL,
 	-- Date of creation of this database entry
@@ -205,7 +207,7 @@ CONSTRAINT "fk_msserli_typeid"
 	ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE INDEX "idx_msserli_sid_start_end" ON "mshop_service_list" ("siteid", "start", "end");
+CREATE INDEX "idx_msserli_sid_stat_start_end" ON "mshop_service_list" ("siteid", "status", "start", "end");
 
 CREATE INDEX "idx_msserli_sid_rid_dom_tid" ON "mshop_service_list" ("siteid", "refid", "domain", "typeid");
 
